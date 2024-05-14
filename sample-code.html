@@ -1,0 +1,71 @@
+<html>
+    <head></head>
+    <body>
+        <div id="myElement"></div>
+        <div class="myClass"></div>
+        <img src="" class="myClassImg" />
+        <script>
+
+        // This is a single-line comment
+        /* 
+        This is a
+        multi-line comment
+        */
+
+        // var name = "John";
+        // let age = 25;
+        // const PI = 3.14;
+
+
+        // let num = 10;
+        // if (num > 20) {
+        //     console.log("Positive number");
+        // } else if (num < 0) {
+        //     console.log("Negative number");
+        // } else {
+        //     console.log("Zero");
+        // }
+
+
+        // For loop
+        // for (let i = 0; i < 5; i++) {
+        //     console.log(i);
+        // }
+
+        // While loop
+        // let x = 0;
+        // while (x < 5) {
+        //     console.log(x);
+        //     x++;
+        // }
+
+        // Select by ID
+        let element = document.getElementById("myElement");
+        console.log("element"+element);
+
+        // Select by class name
+        let elements = document.getElementsByClassName("myClass");
+        console.log("elements"+elements);
+
+        // Select by CSS selector
+        // let elementCss = document.querySelector("#myElement");
+        // console.log("elementCss"+elementCss);
+
+
+
+        // Select by class name
+        let elementImg = document.getElementsByClassName("myClassImg")[0]; 
+
+
+        // Change content
+        element.innerHTML = "New content";
+
+        // Change styles
+        element.style.color = "red";
+
+        // Change attributes
+        // elementImg.setAttribute("src", "13189.jpg");
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Example</title>
+</head>
+<body>
+    <button id="colorBtn">Change Color</button>
+    <p id="para">This is a paragraph.</p>
+
+    <script>
+        let btn = document.getElementById("colorBtn");
+        let para = document.getElementById("para");
+
+        btn.addEventListener("click", function() {
+            para.style.color = "blue";
+        });
+    </script>
+</body>
+</html>

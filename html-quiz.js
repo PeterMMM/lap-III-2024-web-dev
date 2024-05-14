@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Quiz</title>
+</head>
+<body>
+  <div id="quiz">
+    <h1>Quiz Title</h1>
+    <div id="question"></div>
+    <form id="options">
+    </form>
+    <button id="submit">Submit</button>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "What is the capital of France?",
+        options: ["Paris", "London", "Berlin", "Rome"],
+        answer: "Paris"
+      },
+      //Add Questions
+    ];
+
+    const quizContainer = document.getElementById("quiz");
+    const questionElement = document.getElementById("question");
+    const optionsForm = document.getElementById("options");
+    const submitButton = document.getElementById("submit");
+
+    let currentQuestionIndex = 0;
+
+    function loadQuestion() {
+      const currentQuestion = quizData[currentQuestionIndex];
+      questionElement.textContent = currentQuestion.question;
+
+      optionsForm.innerHTML = "";
+      currentQuestion.options.forEach((option, index) => {
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "option";
+        input.value = option;
+        input.id = "option" + index;
+
+        const label = document.createElement("label");
+        label.textContent = option;
+        label.htmlFor = "option" + index;
+
+        optionsForm.appendChild(input);
+        optionsForm.appendChild(label);
+        optionsForm.appendChild(document.createElement("br"));
+      });
+    }
+
+    function checkAnswer() {
+      const selectedOption = document.querySelector("input[name='option']:checked");
+      if (!selectedOption) {
+        alert("Please select an option");
+        return;
+      }
+
+      const userAnswer = selectedOption.value;
+      const correctAnswer = quizData[currentQuestionIndex].answer;
+      const isCorrect = userAnswer === correctAnswer;
+      if (isCorrect) {
+        alert("Correct answer!");
+      } else {
+        alert("Wrong answer. The correct answer is: " + correctAnswer);
+      }
+
+      currentQuestionIndex++;
+      if (currentQuestionIndex < quizData.length) {
+        loadQuestion();
+      } else {
+        alert("Quiz completed!");
+        // Add More Code Here
+      }
+    }
+
+    loadQuestion();
+
+    submitButton.addEventListener("click", checkAnswer);
+  </script>
+</body>
+</html>
