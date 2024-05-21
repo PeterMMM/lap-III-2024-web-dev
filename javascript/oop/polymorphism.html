@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Example</title>
+</head>
+<body>
+    <p id="para">polymorphism</p>
+
+    <script>
+        class Animal {
+            constructor(name) {
+                this.name = name;
+            }
+
+            speak() {
+                console.log(`${this.name} makes a sound.`);
+            }
+
+            eat(food){
+                console.log(`I like ${food}`);
+            }
+        }
+
+        class Dog extends Animal {
+            
+            speak() {
+                console.log(`${this.name} barks.`);
+            }
+        }
+
+        class Cat extends Animal {
+            speak() {
+                console.log(`${this.name} meows.`);
+            }
+        }
+        const Garfee = new Cat("Garfee");
+        Garfee.speak();
+        const animals = [new Dog('Dog'), new Cat('Cat')];
+
+        animals.forEach(animal => animal.speak());
+
+    </script>
+</body>
+</html>

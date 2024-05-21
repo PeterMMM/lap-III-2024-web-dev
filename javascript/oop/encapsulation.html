@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Example</title>
+</head>
+<body>
+    <p id="para">Encapsulation</p>
+
+    <script>
+        class Person {
+            #age;
+
+            constructor(name, age) {
+                this.name = name;
+                this.#age = age;
+            }
+
+            get age() {
+                return this.#age;
+            }
+
+            set setAge(newAge) {
+                if (newAge > 0) {
+                    this.#age = newAge;
+                } else {
+                    console.log('Age must be positive.');
+                }
+            }
+        }
+
+        const person = new Person('Alice', 30);
+        console.log(person.age);
+        person.setAge = 35; //Setter
+        console.log(person.age); // Getter
+        person.setAge = -5;
+
+    </script>
+</body>
+</html>
