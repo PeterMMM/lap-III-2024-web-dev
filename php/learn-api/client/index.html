@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CRUD API</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <script>
+        $(document).ready(function() {
+            // Base URL for API requests
+            const apiUrl = 'http://localhost/lap-php/learn-api/server/api.php';
+
+            // Function to retrieve and display orders
+            function getOrders() {
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    success: function(response) {
+                        displayOrders(response);
+                    },
+                    error: function() {
+                        alert('Error retrieving orders');
+                    }
+                });
+            }
+
+            // Function to display orders in a table
+            function displayOrders(orders) {
+                var table = '<table class="table">';
+                table += '<tr><th>Order ID</th><th>Customer ID</th><th>Order Date</th></tr>';
+                $.each(orders, function(index, order) {
+                    table += '<tr>';
+                    table += '<td>' + order.OrderID + '</td>';
+                    table += '<td>' + order.CustomerID + '</td>';
+                    table += '<td>' + order.CustomerName + '</td>';
+                    table += '<td>' + order.OrderDate + '</td>';
+                    table += '</tr>';
+                });
+                table += '</table>';
+                $('#orders').html(table);
+            }
+
+            // Get initial orders
+            getOrders();
+
+            // Handle the form submission for creating a new order
+            $('#createOrderForm').submit(function(event) {
+                event.preventDefault();
+                var customerID = $('#customerID').val();
+                var orderDate = $('#orderDate').val();
+
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    data: { customerID: customerID, orderDate: orderDate },
+                    success: function(response) {
+                        alert('Order created successfully');
+                        $('#createOrderForm')[0].reset();
+                        getOrders();
+                    },
+                    error: function() {
+                        alert('Error creating order');
+                    }
+                });
+            });
+
+            // Handle the form submission for updating an existing order
+            $('#updateOrderForm').submit(function(event) {
+                event.preventDefault();
+                var orderID = $('#orderID').val();
+                var customerID = $('#updateCustomerID').val();
+                var orderDate = $('#updateOrderDate').val();
+
+                $.ajax({
+                    url: apiUrl,
+                    type: 'PUT', // Update to use PUT method
+                    data: { orderID:orderID, customerID: customerID, orderDate: orderDate },
+                    success: function(response) {
+                        alert('Order updated successfully');
+                        $('#updateOrderForm')[0].reset();
+                        getOrders();
+                    },
+                    error: function(e) {
+                        alert('Error updating order: ' + JSON.stringify(e));
+                    }
+                });
+            });
+
+
+            // Handle the form submission for deleting an order
+            $('#deleteOrderForm').submit(function(event) {
+                event.preventDefault();
+                var orderID = $('#deleteOrderID').val();
+
+                $.ajax({
+                    url: apiUrl + '?orderID=' + orderID,
+                    type: 'DELETE',
+                    success: function(response) {
+                        alert('Order deleted successfully');
+                        $('#deleteOrderForm')[0].reset();
+                        getOrders();
+                    },
+                    error: function() {
+                        alert('Error deleting order');
+                    }
+                });
+            });
+
+            // Handle the refresh button click
+            $('#refreshButton').click(function() {
+                getOrders();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>CRUD API | DAY-8</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Create Order</h2>
+                <form id="createOrderForm">
+                    <div class="mb-3">
+                        <label for="customerID" class="form-label">Customer ID:</label>
+                        <input type="text" class="form-control" id="customerID" name="customerID" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="orderDate" class="form-label">Order Date:</label>
+                        <input type="date" class="form-control" id="orderDate" name="orderDate" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Order</button>
+                </form>
+            </div>
+            
+            <div class="col-md-4">
+                <h2>Update Order</h2>
+                <form id="updateOrderForm">
+                    <div class="mb-3">
+                        <label for="orderID" class="form-label">Order ID:</label>
+                        <input type="text" class="form-control" id="orderID" name="orderID" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateCustomerID" class="form-label">Customer ID:</label>
+                        <input type="text" class="form-control" id="updateCustomerID" name="updateCustomerID" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateOrderDate" class="form-label">Order Date:</label>
+                        <input type="date" class="form-control" id="updateOrderDate" name="updateOrderDate" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Order</button>
+                </form>
+            </div>
+            
+            <div class="col-md-4">
+                <h2>Delete Order</h2>
+                <form id="deleteOrderForm">
+                    <div class="mb-3">
+                        <label for="deleteOrderID" class="form-label">Order ID:</label>
+                        <input type="text" class="form-control" id="deleteOrderID" name="deleteOrderID" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Delete Order</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="text-center mt-3">
+            <button id="refreshButton" class="btn btn-secondary">Refresh Orders</button>
+        </div>
+        
+        <h2>Orders</h2>
+        <div id="orders"></div>
+    </div>
+</body>
+</html>

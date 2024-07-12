@@ -1,0 +1,1 @@
+INSERT INTO `Customers` (`CustomerID`, `CustomerName`, `City`) VALUES ('1', 'Joe', 'Yangon'), ('2', 'Jim', 'Madalay');
